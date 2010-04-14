@@ -69,9 +69,8 @@ module ActiveScaffold::Actions
         render :partial => 'stylesheet', :layout => false
       elsif params[:format] == "Excel"
         @export_library = :surpass
-# ?       headers["Content-Type"] = "text/xml"
         headers["Content-Disposition"] = "attachment; filename=\"#{self.controller_name}_#{Time.now.strftime('%Y%m%d')}.xls\""
-        render :partial => 'export', :layout => false, :status => response_status 
+        render :partial => 'export', :layout => false, :content_type => Mime::XLS, :status => response_status 
       end
     end
 
