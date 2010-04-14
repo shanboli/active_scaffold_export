@@ -24,7 +24,7 @@
   header_style = StyleFormat.new(:font_bold => true)
   row = 0
   
-  if !params[:skip_header]
+  unless params[:skip_header]
       @export_columns.each_with_index do |c, j|
           sheet.write(row, j, c.label, header_style)
       end
