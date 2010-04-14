@@ -1,5 +1,5 @@
 <%
-  url_options = params_for(:action => :export, :format => 'csv')
+  url_options = params_for(:action => :export)
   export_config = active_scaffold_config.export
 -%>
 
@@ -28,6 +28,29 @@
   </div>
   <div class="option checkbox-wrapper">
     <%= content_tag(:label, radio_button_tag('full_download', true, export_config.default_full_download) + " #{as_('All Pages')}") if export_config.allow_full_download %>
+  </div>
+  &nbsp;
+</div>
+<div class="separator"></div>
+<h3><%=as_('Format')%></h3>
+<div class="options checkbox-list">
+  <div class="option checkbox-wrapper">
+	<%= content_tag(:label, radio_button_tag('format', "Excel", true) + " #{as_('Excel')}") %>
+  </div>
+  <div class="option checkbox-wrapper">
+	<%= content_tag(:label, radio_button_tag('format', "EnhancedXMLToFile", false) + " #{as_('Enhanced XML To File')}") %>
+  </div>
+  <div class="option checkbox-wrapper">
+	<%= content_tag(:label, radio_button_tag('format', "EnhancedXML", false) + " #{as_('Enhanced XML')}") %>
+  </div>
+  <div class="option checkbox-wrapper">
+	<%= content_tag(:label, radio_button_tag('format', "RawXML", false) + " #{as_('Raw XML')}") %>
+  </div>
+  <div class="option checkbox-wrapper">
+	<%= content_tag(:label, radio_button_tag('format', "CSV", false) + " #{as_('CSV')}") %>
+  </div>
+  <div class="option checkbox-wrapper">
+	<%= content_tag(:label, radio_button_tag('format', "Stylesheet", false) + " #{as_('Stylesheet')}") %>
   </div>
   &nbsp;
 </div>
