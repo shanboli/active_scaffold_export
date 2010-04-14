@@ -1,5 +1,19 @@
-This is my version of the active_scaffold_export plugin.
+This works with Rails 2.3 and the rails-2.3 branch of ActiveScaffold.
 
-It works with Rails 2.1 and the latest ActiveScaffold.
+The following exports are supported:
+Excel
+Enhanced XML To File (uses XSL Stylesheet)
+Enhanced XML
+Raw XML
+CSV
+Stylesheet (XSL stylesheet used by Enhanced XML To File) 
+
+Raw XML is a rails "to_xml" which dumps the db/model data i.e. just the ids for any associations. 
+All others export what you see in the list i.e. real association data. 
+For plural associations, all records are output - not just the first 3 like you see in an AS list. 
 
 I have renamed the old activescaffoldexport plugin to follow the same pattern as the other ActiveScaffold related plugins.
+
+Gems required:
+fastercsv
+surpass (for Excel export)
