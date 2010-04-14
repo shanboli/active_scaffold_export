@@ -45,9 +45,34 @@ module ActiveScaffold
       end
 
       def format_plural_association_export_column(association_records)
-        firsts = association_records.first(4).collect { |v| v.to_label }
-        firsts[3] = '…' if firsts.length == 4
-        format_value(firsts.join(','))
+         firsts = association_records.collect { |v| v.to_label }
+         formatted_value = clean_column_value(format_column(firsts.join(', ')))
+      end
+
+      def format_column(column_value)
+        if column_empty?(column_value)
+          active_scaffold_config.list.empty_field_text
+        elsif column_value.instance_of? Time
+          format_time(column_value)
+        elsif column_value.instance_of? Date
+          format_date(column_value)
+        else
+          column_value.to_s
+        end
+      end
+
+      def format_time(time)
+        format = ActiveSupport::CoreExtensions::Time::Conversions::DATE_FORMATS[:default] || "%m/%d/%Y %I:%M %p"
+        time.strftime(format)
+      end
+
+      def format_date(date)
+        format = ActiveSupport::CoreExtensions::Date::Conversions::DATE_FORMATS[:default] || "%m/%d/%Y"
+        date.strftime(format)
+      end
+
+      def column_empty?(column_value)
+        column_value.nil? || (column_value.empty? rescue false)
       end
 
       ## This helper can be overridden to change the way that the headers
