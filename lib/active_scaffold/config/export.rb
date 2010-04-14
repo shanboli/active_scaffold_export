@@ -61,7 +61,7 @@ module ActiveScaffold::Config
 
     # provides access to the list of columns specifically meant for this action to use
     def columns
-      self.columns = @core.columns._inheritable unless @columns
+      self.columns = @core.list.columns.collect {|c| c.name} unless @columns
       @columns
     end
     def columns=(val)
