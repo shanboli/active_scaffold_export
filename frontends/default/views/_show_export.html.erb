@@ -58,5 +58,7 @@
   
   <%= submit_tag as_('Export'), :class => "submit" %>
   <%= link_to as_('Cancel'), params_for(:action => 'list'), :class => 'cancel' %>
+  <%= link_to_function as_('&nbsp;&nbsp;Select All'),  '$$("div.columns input").each(function(input){input.checked=true})',  :class => 'active-scaffold-footer' %> 
+  <%= link_to_function as_('&nbsp;&nbsp;Select None'), '$$("div.columns input").each(function(input){input.checked=false})', :class => 'active-scaffold-footer' %>   
   <%= loading_indicator_tag(:action => :export) %>
 </form>
