@@ -6,7 +6,7 @@ xml.tag! :"xsl:stylesheet", :version => "1.0", :"xmlns:xsl" => "http://www.w3.or
       xml.tag! "body" do
         xml.tag! "h2", active_scaffold_config.list.user.label
         xml.tag! "table", :border => "1" do
-          xml.tag! "tr", :bgcolor => "#9acd32" do
+          xml.tag! "tr", :bgcolor => "#{@bgcolor}" do
             @export_columns.each do |column|
               xml.tag! "th", :align=>"left" do 
                 xml.text! "#{ActiveSupport::Inflector.humanize(column.name)}" 

@@ -51,25 +51,25 @@ module ActiveScaffold::Actions
 
       if params[:format] == "CSV"
         @export_library = :fastercsv
-        response.headers['Content-Disposition'] = "attachment; filename=#{self.controller_name}.csv"
+        response.headers['Content-Disposition'] = "attachment; filename=#{export_file_name(:csv)}"
         render :partial => 'export', :layout => false, :content_type => Mime::CSV, :status => response_status 
       elsif params[:format] == "RawXML"
         render :xml => @records.to_xml
       elsif params[:format] == "EnhancedXML"
-        @xml_file = false
         render :partial => 'listxml'
       elsif params[:format] == "EnhancedXMLToFile"
-        @xml_file = true
+        @stylesheet_file = export_file_name(:xsl)
         headers["Content-Type"] = "text/xml"
-        headers["Content-Disposition"] = "attachment; filename=\"#{self.controller_name}_#{Time.now.strftime('%Y%m%d')}.xml\""
+        headers["Content-Disposition"] = "attachment; filename=\"#{export_file_name(:xml)}\""
         render :partial => 'listxml'
       elsif params[:format] == "Stylesheet"
+        @bgcolor = bgcolor
         headers["Content-Type"] = "text/xml"
-        headers["Content-Disposition"] = "attachment; filename=\"#{ActiveSupport::Inflector.singularize(self.controller_name)}.xsl\""
+        headers["Content-Disposition"] = "attachment; filename=\"#{export_file_name(:xsl)}\""
         render :partial => 'stylesheet', :layout => false
       elsif params[:format] == "Excel"
         @export_library = :surpass
-        headers["Content-Disposition"] = "attachment; filename=\"#{self.controller_name}_#{Time.now.strftime('%Y%m%d')}.xls\""
+        headers["Content-Disposition"] = "attachment; filename=\"#{export_file_name(:xls)}\""
         render :partial => 'export', :layout => false, :content_type => Mime::XLS, :status => response_status 
       end
     end
@@ -103,8 +103,21 @@ module ActiveScaffold::Actions
 
     # The default name of the downloaded file.
     # You may override the method to specify your own file name generation.
-    def export_file_name
-      "#{self.controller_name}.csv"
+    def export_file_name(extension)
+      return "#{export_controller}.#{extension.to_s}" if extension == :xsl
+      "#{export_file}.#{extension.to_s}"
+    end
+    
+    def export_controller
+      "#{self.controller_name}"
+    end
+    
+    def export_file
+      "#{export_controller}_#{Time.now.strftime('%Y-%m-%d')}"
+    end
+    
+    def bgcolor
+      "#9acd32"
     end
 
     # The default security delegates to ActiveRecordPermissions.
