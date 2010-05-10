@@ -10,7 +10,7 @@ module ActiveScaffold::Config
     # --------------------------
     # the ActionLink for this action
     cattr_accessor :link
-    @@link = ActiveScaffold::DataStructures::ActionLink.new('show_export', :label => 'Export', :type => :table, :security_method => :export_authorized?)
+    @@link = ActiveScaffold::DataStructures::ActionLink.new('show_export', :label => 'Export', :type => :collection, :security_method => :export_authorized?)
 
     # configures where the plugin itself is located. there is no instance version of this.
     cattr_accessor :plugin_directory
@@ -25,7 +25,7 @@ module ActiveScaffold::Config
       @link ||= if show_form
         self.class.link.clone
       else
-        ActiveScaffold::DataStructures::ActionLink.new('export', :label => 'Export', :type => :table, :inline => false, :security_method => :export_authorized?)
+        ActiveScaffold::DataStructures::ActionLink.new('export', :label => 'Export', :type => :collection, :inline => false, :security_method => :export_authorized?)
       end
     end
 
@@ -58,6 +58,7 @@ module ActiveScaffold::Config
       self.default_deselected_columns = [] if @default_deselected_columns.nil?
       @default_deselected_columns
     end
+    
 
     # provides access to the list of columns specifically meant for this action to use
     def columns
